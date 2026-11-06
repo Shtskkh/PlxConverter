@@ -6,9 +6,10 @@ public static class CliBuilder
 {
     public static RootCommand Build()
     {
-        var rootCommand = new RootCommand("CLI-конвертер plx файлов в человеко-читаемый формат (json, yaml).")
+        var rootCommand = new RootCommand("CLI-конвертер plx файлов в человекочитаемый формат (json, yaml).")
         {
-            Options.InputFileOption,
+            Options.InputOption,
+            Options.OutputOption,
             Options.OutputFormatsOption
         };
 

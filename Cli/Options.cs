@@ -4,9 +4,9 @@ namespace PlxConverter.Cli;
 
 public static class Options
 {
-    public readonly static Option<FileInfo> InputFileOption = new("--input-file")
+    public readonly static Option<FileInfo> InputOption = new("--input", "-i")
     {
-        Description = "Файл для конвертации.",
+        Description = "Путь к исходному .plx-файлу.",
         Required = true,
         CustomParser = result =>
         {
@@ -22,24 +22,16 @@ public static class Options
         }
     };
 
-    public readonly static Option<string[]> OutputFormatsOption = new("--output-formats")
+    public readonly static Option<FileInfo> OutputOption = new("--output", "-o")
     {
-        Description = "Форматы выходного файла.",
-        AllowMultipleArgumentsPerToken = true,
+        Description = "Путь к JSON/YAML-файлу результата.",
         Required = true
     };
 
-    static Options()
+    public readonly static Option<OutputFormat> OutputFormatsOption = new("--format")
     {
-        OutputFormatsOption.Validators.Add(result =>
-        {
-            foreach (var token in result.Tokens)
-            {
-                var value = token.Value;
-
-                if (value != "json" && value != "yaml")
-                    result.AddError($"Недопустимый формат: {value}. Допустимые значения: json, yaml.");
-            }
-        });
-    }
+        Description = "Формат результата.",
+        Required = true,
+        DefaultValueFactory = _ => OutputFormat.Json
+    };
 }
